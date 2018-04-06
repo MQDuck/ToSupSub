@@ -1,6 +1,6 @@
 /*
- * To SuperSubScript
- * https://github.com/Subhipster-Collective/To-Superscript
+ * ToSupSub
+ * https://github.com/Subhipster-Collective/ToSupSub
  *
  * Licensed under the MIT License <http://opensource.org/licenses/MIT>.
  * Copyright © 2018 Jeffrey Thomas Piercy
