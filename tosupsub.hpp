@@ -25,12 +25,20 @@
 #include <string>
 
 std::string tosuperscript(const long long int number);
+std::string tosuperscript(const unsigned long long int number);
+std::string tosuperscript(const long int number);
+std::string tosuperscript(const unsigned long int number);
 std::string tosuperscript(const int number);
+std::string tosuperscript(const unsigned int number);
 std::string tosuperscript(const long double number);
 std::string tosuperscript(const double number);
 
 std::string tosubscript(const long long int number);
+std::string tosubscript(const unsigned long long int number);
+std::string tosubscript(const long int number);
+std::string tosubscript(const unsigned long int number);
 std::string tosubscript(const int number);
+std::string tosubscript(const unsigned int number);
 std::string tosubscript(const long double number);
 std::string tosubscript(const double number);
 
