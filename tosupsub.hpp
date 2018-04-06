@@ -24,6 +24,14 @@
 
 #include <string>
 
-std::string tosuperscript(long long int number);
+std::string tosuperscript(const long long int number);
+std::string tosuperscript(const int number);
+std::string tosuperscript(const long double number);
+std::string tosuperscript(const double number);
+
+std::string tosubscript(const long long int number);
+std::string tosubscript(const int number);
+std::string tosubscript(const long double number);
+std::string tosubscript(const double number);
 
 #endif //TOSUPSUB_TOSUPSUB_HPP
