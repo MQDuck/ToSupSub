@@ -9,35 +9,35 @@
 #include "tosupsub.hpp"
 
 static const std::string digitToSuperscript[] {
-    "\u2070", // 0
-    "\u00B9", // 1
-    "\u00B2", // 2
-    "\u00B3", // 3
-    "\u2074", // 4
-    "\u2075", // 5
-    "\u2076", // 6
-    "\u2077", // 7
-    "\u2078", // 8
-    "\u2079", // 9
-    "\u207A", // +
-    "\u207B", // -
-    "\u22C5"  // . (sort of)
+    "\u2070", // [0]  = 0
+    "\u00B9", // [1]  = 1
+    "\u00B2", // [2]  = 2
+    "\u00B3", // [3]  = 3
+    "\u2074", // [4]  = 4
+    "\u2075", // [5]  = 5
+    "\u2076", // [6]  = 6
+    "\u2077", // [7]  = 7
+    "\u2078", // [8]  = 8
+    "\u2079", // [9]  = 9
+    "\u207A", // [10] = +
+    "\u207B", // [11] = -
+    "\u22C5"  // [12] = . (sort of)
 };
 
 static const std::string digitToSubscript[] {
-    "\u2080", // 0
-    "\u2081", // 1
-    "\u2082", // 2
-    "\u2083", // 3
-    "\u2084", // 4
-    "\u2085", // 5
-    "\u2086", // 6
-    "\u2087", // 7
-    "\u2088", // 8
-    "\u2089", // 9
-    "\u208A", // +
-    "\u208B", // -
-    "."       // . (literally)
+    "\u2080", // [0]  = 0
+    "\u2081", // [1]  = 1
+    "\u2082", // [2]  = 2
+    "\u2083", // [3]  = 3
+    "\u2084", // [4]  = 4
+    "\u2085", // [5]  = 5
+    "\u2086", // [6]  = 6
+    "\u2087", // [7]  = 7
+    "\u2088", // [8]  = 8
+    "\u2089", // [9]  = 9
+    "\u208A", // [10] = +
+    "\u208B", // [11] = -
+    "."       // [12] = . (literally)
 };
 
 std::string tosupsubscript(unsigned long long int number, const bool isNegative, const std::string* const digitMap)
@@ -48,17 +48,18 @@ std::string tosupsubscript(unsigned long long int number, const bool isNegative,
     if(isNegative)
         supsubStr = digitMap[11];
     for(digitSize = 10; number / digitSize; digitSize *= 10);
-    for(digitSize /= 10; digitSize > 0; digitSize /= 10)
+    for(digitSize /= 10; digitSize > 1; digitSize /= 10)
     {
-        long long int digit = number / digitSize;
+        size_t digit = number / digitSize;
         supsubStr += digitMap[digit];
         number %= (digit * digitSize);
     }
+    supsubStr += digitMap[number];
 
     return supsubStr;
 }
 
-std::string tosupsubscript(const long double number, const std::string* const digitMap)
+    std::string tosupsubscript(const long double number, const std::string* const digitMap)
 {
     std::string numStr = std::to_string(number);
     std::string supsubStr;
@@ -83,6 +84,11 @@ std::string tosupsubscript(const long double number, const std::string* const di
     return supsubStr;
 }
 
+std::string tosuperscript(const unsigned long long int number)
+{
+    return tosupsubscript(number, false, digitToSuperscript);
+}
+
 std::string tosuperscript(const long long int number)
 {
     if(number < 0)
@@ -91,39 +97,14 @@ std::string tosuperscript(const long long int number)
         return tosupsubscript(static_cast<const unsigned long long int>(number), false, digitToSuperscript);
 }
 
-std::string tosuperscript(const unsigned long long int number)
-{
-    return tosupsubscript(number, false, digitToSuperscript);
-}
-
-std::string tosuperscript(const long int number)
-{
-    return tosuperscript(static_cast<const long long int>(number));
-}
-
-std::string tosuperscript(const unsigned long int number)
-{
-    return tosuperscript(static_cast<const unsigned long long int>(number));
-}
-
-std::string tosuperscript(const int number)
-{
-    return tosuperscript(static_cast<const long long int>(number));
-}
-
-std::string tosuperscript(const unsigned int number)
-{
-    return tosuperscript(static_cast<const unsigned long long int>(number));
-}
-
 std::string tosuperscript(const long double number)
 {
     return tosupsubscript(number, digitToSuperscript);
 }
 
-std::string tosuperscript(const double number)
+std::string tosubscript(const unsigned long long int number)
 {
-    return tosuperscript(static_cast<const long double>(number));
+    return tosupsubscript(number, false, digitToSubscript);
 }
 
 std::string tosubscript(const long long int number)
@@ -134,14 +115,35 @@ std::string tosubscript(const long long int number)
         return tosupsubscript(static_cast<const unsigned long long int>(number), false, digitToSubscript);
 }
 
-std::string tosubscript(const unsigned long long int number)
+std::string tosubscript(const long double number)
 {
-    return tosupsubscript(number, false, digitToSubscript);
+    return tosupsubscript(number, digitToSubscript);
 }
 
-std::string tosubscript(const long int number)
+
+std::string tosuperscript(const unsigned long int number)
 {
-    return tosubscript(static_cast<const long long int>(number));
+    return tosuperscript(static_cast<const unsigned long long int>(number));
+}
+
+std::string tosuperscript(const long int number)
+{
+    return tosuperscript(static_cast<const long long int>(number));
+}
+
+std::string tosuperscript(const unsigned int number)
+{
+    return tosuperscript(static_cast<const unsigned long long int>(number));
+}
+
+std::string tosuperscript(const int number)
+{
+    return tosuperscript(static_cast<const long long int>(number));
+}
+
+std::string tosuperscript(const double number)
+{
+    return tosuperscript(static_cast<const long double>(number));
 }
 
 std::string tosubscript(const unsigned long int number)
@@ -149,7 +151,7 @@ std::string tosubscript(const unsigned long int number)
     return tosubscript(static_cast<const unsigned long long int>(number));
 }
 
-std::string tosubscript(const int number)
+std::string tosubscript(const long int number)
 {
     return tosubscript(static_cast<const long long int>(number));
 }
@@ -159,9 +161,9 @@ std::string tosubscript(const unsigned int number)
     return tosubscript(static_cast<const unsigned long long int>(number));
 }
 
-std::string tosubscript(const long double number)
+std::string tosubscript(const int number)
 {
-    return tosupsubscript(number, digitToSubscript);
+    return tosubscript(static_cast<const long long int>(number));
 }
 
 std::string tosubscript(const double number)
