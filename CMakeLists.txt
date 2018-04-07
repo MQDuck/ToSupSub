@@ -3,4 +3,4 @@ project(ToSupSub)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(ToSupSub tosupsub.cpp tosupsub.hpp)
+add_library(ToSupSub tosupsub.hpp tosupsub.h tosupsubscript_templates.hpp)

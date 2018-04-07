@@ -11,24 +11,53 @@
 
 #include <string>
 
-std::string tosuperscript(const unsigned long long int number);
-std::string tosuperscript(const long long int number);
-std::string tosuperscript(const long double number);
+namespace
+{
+#include "tosupsubscript_templates.hpp"
+} // anonymous namespace
 
-std::string tosubscript(const unsigned long long int number);
-std::string tosubscript(const long long int number);
-std::string tosubscript(const long double number);
+template<class T>
+std::string tosuperscript(const T number,
+                          typename std::enable_if<std::is_integral<T>::value>::type* = 0,
+                          typename std::enable_if<std::is_signed<T>::value>::type* = 0)
+{
+    return si_tosupsubcript<T, digitToSuperscript>(number);
+}
 
-std::string tosuperscript(const unsigned long int number);
-std::string tosuperscript(const long int number);
-std::string tosuperscript(const unsigned int number);
-std::string tosuperscript(const int number);
-std::string tosuperscript(const double number);
+template<class T>
+std::string tosuperscript(const T number,
+                          typename std::enable_if<std::is_integral<T>::value>::type* = 0,
+                          typename std::enable_if<std::is_unsigned<T>::value>::type* = 0)
+{
+    return ui_tosupsubcript<T, digitToSuperscript>(number);
+}
 
-std::string tosubscript(const unsigned long int number);
-std::string tosubscript(const long int number);
-std::string tosubscript(const unsigned int number);
-std::string tosubscript(const int number);
-std::string tosubscript(const double number);
+template<class T>
+std::string tosuperscript(const T number, typename std::enable_if<std::is_floating_point<T>::value >::type* = 0)
+{
+    return f_tosupsubscript<T, digitToSuperscript>(number);
+}
+
+template<class T>
+std::string tosubscript(const T number,
+                          typename std::enable_if<std::is_integral<T>::value>::type* = 0,
+                          typename std::enable_if<std::is_signed<T>::value>::type* = 0)
+{
+    return si_tosupsubcript<T, digitToSubscript>(number);
+}
+
+template<class T>
+std::string tosubscript(const T number,
+                          typename std::enable_if<std::is_integral<T>::value>::type* = 0,
+                          typename std::enable_if<std::is_unsigned<T>::value>::type* = 0)
+{
+    return ui_tosupsubcript<T, digitToSubscript>(number);
+}
+
+template<class T>
+std::string tosubscript(const T number, typename std::enable_if<std::is_floating_point<T>::value >::type* = 0)
+{
+    return f_tosupsubscript<T, digitToSubscript>(number);
+}
 
 #endif //TOSUPSUB_TOSUPSUB_HPP
