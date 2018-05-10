@@ -3,4 +3,5 @@ project(ToSupSub)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(ToSupSub tosupsub.hpp)
+add_executable(ToSupSub
+        tosupsub.hpp main.cpp)
